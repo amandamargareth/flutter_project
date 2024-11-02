@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sesi4/model/feed.dart';
 
 class FeedCard extends StatelessWidget {
+  final Feed feed;
+  
   const FeedCard({
     super.key,
+    required this.feed
   });
 
   @override
@@ -14,14 +18,14 @@ class FeedCard extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
-                url
+                feed.user.avatar
               ),
             ),
-            title: Text('amandamargaretha_s'),
-            subtitle: Text('songs'),
+            title: Text(feed.user.name),
+            subtitle: Text(feed.user.place),
             trailing: Icon(Icons.share),
           ),
-          Image.network('https://images.pexels.com/photos/57416/cat-sweet-kitty-animals-57416.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          Image.network(feed.content.image,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width * 0.8,
           fit: BoxFit.cover,
@@ -53,8 +57,8 @@ class FeedCard extends StatelessWidget {
   ],
           ),
 ListTile(
-  title: Text('12.342 likes'),
-  subtitle: Text('test coba test'),
+  title: Text(feed.content.likes),
+  subtitle: Text(feed.content.descriptions),
 )
 
       ]),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sesi4/controller/feed_controller.dart';
 import 'package:flutter_sesi4/view/feed_cart.dart';
 
 class HomePage extends StatefulWidget {
+  
   const HomePage({super.key});
 
   @override
@@ -19,14 +21,11 @@ class _HomePageState extends State<HomePage> {
           ),
           ),
           ),
-    body: ListView(
-      children: [
-        FeedCard(),
-         FeedCard(),
-          FeedCard(),
-           FeedCard(),
-            FeedCard(),
-      ],
+    body: ListView.builder(
+      itemCount: FeedController().feeds.length, // Jumlah total item
+  itemBuilder: (context, index) {
+    return FeedCard(feed: FeedController().feeds[index]); 
+  }
     ),
     );
   }
