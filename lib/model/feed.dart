@@ -1,27 +1,26 @@
 class Feed {
+  final int id;
   //User
   final User user;
   //Content
   final Content content;
 
-  Feed({required this.user, required this.content});
+  Feed({required this.id, required this.user, required this.content});
 }
 
 class Content {
   final String image;
-  bool favorite;
+  bool isLike;
+  bool bookmark;
   final String likes;
   final String descriptions;
 
   Content(
       {required this.image,
-      this.favorite = false,
+      required this.isLike,
+      required this.bookmark,
       required this.likes,
       required this.descriptions});
-
-  void toggleFavorite() {
-    favorite = !favorite;
-  }
 }
 
 class User {

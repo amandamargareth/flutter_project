@@ -1,46 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sesi4/model/feed.dart';
+import 'package:flutter_sesi4/model/feed_repository.dart';
 
-class FeedController {
-  List<Feed> feeds = [
-    Feed(
-        user: User(
-          name: 'Jhone Dave',
-          avatar:
-              'https://images.pexels.com/photos/27545223/pexels-photo-27545223/free-photo-of-model-in-sweater-lying-on-grass.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-          place: 'Makassar, Indonesia',
-        ),
-        content: Content(
-            image:
-                'https://images.pexels.com/photos/17323471/pexels-photo-17323471/free-photo-of-portrait-of-bored-child.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            favorite: true,
-            likes: '21.310 likes',
-            descriptions: 'cute girl')),
-    Feed(
-        user: User(
-          name: 'couplecouple',
-          avatar:
-              'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-          place: 'Bandung, Indonesia',
-        ),
-        content: Content(
-            image:
-                'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            favorite: false,
-            likes: '30.100 likes',
-            descriptions: 'love love couple')),
-    Feed(
-        user: User(
-          name: 'dogdaily',
-          avatar:
-              'https://images.pexels.com/photos/9102177/pexels-photo-9102177.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-          place: 'Garut, Indonesia',
-        ),
-        content: Content(
-            image:
-                'https://images.pexels.com/photos/9102177/pexels-photo-9102177.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            favorite: true,
-            likes: '19.837 likes',
-            descriptions: 'day 123243523')),
-  ];
+class FeedController extends ChangeNotifier{
+  List<Feed> feeds = FeedRepository().fetch();
+  int get length => feeds.length;
+
+  Feed feed(int index) {
+    return feeds[index];
+  }
+
+  like(Feed feed){
+    feeds.firstWhere(
+      (element) => element.id == feed.id,
+      ).content.isLike = !feed.content.isLike;
+      notifyListeners();
+  }
+
+  bookmark(Feed feed){
+    feeds.firstWhere(
+      (element) => element.id == feed.id,
+      ).content.bookmark = !feed.content.bookmark;
+      notifyListeners();
+  }
+
+ refresh() {
+    feeds = FeedRepository().fetch();
+    notifyListeners();
+  }
+
+
 }
