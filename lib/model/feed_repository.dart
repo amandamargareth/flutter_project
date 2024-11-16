@@ -6,7 +6,7 @@ class FeedRepository {
     Feed(
       id : 1,
         user: User(
-          name: 'Jhone Dave',
+          name: 'Michella Queen',
           avatar:
               'https://images.pexels.com/photos/27545223/pexels-photo-27545223/free-photo-of-model-in-sweater-lying-on-grass.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           place: 'Makassar, Indonesia',

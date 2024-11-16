@@ -10,6 +10,8 @@ class FeedController extends ChangeNotifier{
     return feeds[index];
   }
 
+  List<Feed> get bookmarkedFeeds => feeds.where((feed) => feed.content.bookmark).toList();  
+
   like(Feed feed){
     feeds.firstWhere(
       (element) => element.id == feed.id,
