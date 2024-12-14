@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sesi4/controller/feed_controller.dart';
+import 'package:flutter_sesi4/controller/photo_controller.dart';
 import 'package:flutter_sesi4/view/feed_bookmark.dart';
 import 'package:flutter_sesi4/view/feed_cart.dart';
+import 'package:flutter_sesi4/view/photo_card.dart';
 import 'package:flutter_sesi4/view/profile_page.dart'; // Import ProfilePage
 import 'package:provider/provider.dart';
 
@@ -17,29 +19,28 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<FeedController>();
+    final controller = context.watch<PhotoController>();
 
     // Perubahan pada _widgetOptions
-    List<Widget> _widgetOptions = <Widget>[
+    List<Widget> widgetOptions = <Widget>[
       // Tab Home
       ListView.builder(
-        itemCount: controller.feeds.length, // Validasi jumlah item
         itemBuilder: (context, index) {
-          return FeedCard(feed: controller.feeds[index]);
+          return PhotoCard(photos: controller.photos[index]);
         },
       ),
       // Tab Bookmark
-      ListView.builder(
-        itemCount: controller.bookmarkedFeeds.length, // Validasi jumlah item
-        itemBuilder: (context, index) {
-          return FeedCard(feed: controller.bookmarkedFeeds[index]);
-        },
-      ),
+      // ListView.builder(
+      //   itemCount: controller.2ookmarkedFeeds.length, // Validasi jumlah item
+      //   itemBuilder: (context, index) {
+      //     return FeedCard(feed: controller.bookmarkedFeeds[index]);
+      //   },
+      // ),
       // Tab Profile
       const ProfilePage(), // Ganti dengan laman ProfilePage
     ];
 
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       setState(() {
         _selectedIndex = index; // Update tab yang dipilih
       });
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: _widgetOptions.elementAt(_selectedIndex), // Render sesuai tab
+      body: widgetOptions.elementAt(_selectedIndex), // Render sesuai tab
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.black,
-        onTap: _onItemTapped, // Pindah tab
+        onTap: onItemTapped, // Pindah tab
       ),
     );
   }

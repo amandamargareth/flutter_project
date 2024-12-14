@@ -18,7 +18,7 @@ class FeedBookmarkPage extends State<BookmarkPage> {
     final controller = context.watch<FeedController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bookmark Page', 
+        title: const Text('Bookmark Page', 
         style: TextStyle(
           fontWeight: FontWeight.w500
           ),
@@ -26,7 +26,7 @@ class FeedBookmarkPage extends State<BookmarkPage> {
           ),
     body: RefreshIndicator(
       onRefresh: () async {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         controller.refresh();
       },
       child: ListView.builder(

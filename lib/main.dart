@@ -1,5 +1,6 @@
                                                                                              import 'package:flutter/material.dart';
 import 'package:flutter_sesi4/controller/feed_controller.dart';
+import 'package:flutter_sesi4/controller/photo_controller.dart';
 import 'package:flutter_sesi4/view/home_page.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers : [
         ChangeNotifierProvider(create: (context) => FeedController(),
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => PhotoController(),
+        ),
       ], 
       child: MaterialApp(
         title: 'My App',
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
-        home: HomePage(),
+        home: const HomePage(),
         debugShowCheckedModeBanner: false,
       ),
     );

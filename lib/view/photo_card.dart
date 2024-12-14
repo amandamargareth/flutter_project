@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sesi4/controller/feed_controller.dart';
-import 'package:flutter_sesi4/model/feed.dart';
+import 'package:flutter_sesi4/controller/photo_controller.dart';
+import 'package:flutter_sesi4/model/photo.dart';
 import 'package:provider/provider.dart';
 
-class FeedCard extends StatefulWidget {
-  final Feed feed;
+class PhotoCard extends StatefulWidget {
+  final Photos photos;
 
-  const FeedCard({super.key, required this.feed});
+  const PhotoCard({super.key, required this.photos});
 
   @override
-  State<FeedCard> createState() => _FeedCardState();
+  State<PhotoCard> createState() => _PhotoCardState();
 }
 
-class _FeedCardState extends State<FeedCard> {
+class _PhotoCardState extends State<PhotoCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(children: [
         ListTile(
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(widget.feed.user.avatar),
+            backgroundImage: NetworkImage(widget.photos.user?.profileImage?.small??''),
           ),
-          title: Text(widget.feed.user.name),
-          subtitle: Text(widget.feed.user.place),
+          title: Text(widget.photos.user?.userName??''),
+          subtitle: Text(widget.photos.user?.firstName??''),
           trailing: const Icon(Icons.more_vert_rounded),
         ),
         Image.network(
-          widget.feed.content.image,
+          widget.photos.urls?.regular??'',
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width * 0.8,
           fit: BoxFit.cover,
@@ -37,12 +37,12 @@ class _FeedCardState extends State<FeedCard> {
             const SizedBox(width: 10),
             IconButton(
               onPressed : () {
-                context.read<FeedController>().like (widget.feed);
+                // context.read<FeedController>().like (widget.photos);
               },
-              icon: Icon(widget.feed.content.isLike? 
+              icon: Icon((widget.photos.likedByUser??false)?
               Icons.favorite : 
               Icons.favorite_outline_rounded,
-              color: widget.feed.content.isLike ?
+              color: (widget.photos.likedByUser??false)?
                 Colors.red
                   : null, // Tidak ada warna jika false
               size: 24.0,
@@ -66,12 +66,12 @@ class _FeedCardState extends State<FeedCard> {
               padding: const EdgeInsets.only(right: 8.0),
               child:  IconButton(
               onPressed : () {
-                context.read<FeedController>().bookmark (widget.feed);
+                // context.read<FeedController>().bookmark (widget.photos);
               },
-              icon: Icon(widget.feed.content.bookmark? 
+              icon: Icon((widget.photos.likedByUser??false)? 
               Icons.bookmark : 
               Icons.bookmark_outline_rounded,
-              color: widget.feed.content.bookmark ?
+              color: (widget.photos.likedByUser??false) ?
                 const Color.fromARGB(255, 0, 0, 0)
                   : null, // Tidak ada warna jika false
               size: 24.0,
@@ -83,8 +83,8 @@ class _FeedCardState extends State<FeedCard> {
           ],
         ),
         ListTile(
-          title: Text(widget.feed.content.likes),
-          subtitle: Text(widget.feed.content.descriptions),
+          title: Text((widget.photos.likes??0).toString()),
+          subtitle: Text(widget.photos.altDescription??''),
         )
       ]),
     );
