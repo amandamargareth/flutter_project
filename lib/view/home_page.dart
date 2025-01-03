@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sesi4/controller/feed_controller.dart';
-import 'package:flutter_sesi4/controller/photo_controller.dart';
+import 'package:flutter_sesi4/controller/home_controller.dart';
 import 'package:flutter_sesi4/view/feed_bookmark.dart';
-import 'package:flutter_sesi4/view/feed_cart.dart';
-import 'package:flutter_sesi4/view/photo_card.dart';
+import 'package:flutter_sesi4/view/feed_list_widget.dart';
 import 'package:flutter_sesi4/view/profile_page.dart'; // Import ProfilePage
 import 'package:provider/provider.dart';
 
@@ -15,36 +13,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // Dipindahkan ke luar build agar state persist
+  final bodies = const [
+    FeedListWidget(),
+    FeedListWidget(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<PhotoController>();
-
-    // Perubahan pada _widgetOptions
-    List<Widget> widgetOptions = <Widget>[
-      // Tab Home
-      ListView.builder(
-        itemBuilder: (context, index) {
-          return PhotoCard(photos: controller.photos[index]);
-        },
-      ),
-      // Tab Bookmark
-      // ListView.builder(
-      //   itemCount: controller.2ookmarkedFeeds.length, // Validasi jumlah item
-      //   itemBuilder: (context, index) {
-      //     return FeedCard(feed: controller.bookmarkedFeeds[index]);
-      //   },
-      // ),
-      // Tab Profile
-      const ProfilePage(), // Ganti dengan laman ProfilePage
-    ];
-
-    void onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index; // Update tab yang dipilih
-      });
-    }
+    final controller = context.watch<HomeController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -52,6 +29,7 @@ class _HomePageState extends State<HomePage> {
           'OurApp',
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
+        leading: const Icon(Icons.menu_rounded),
         actions: [
           IconButton(
             onPressed: () {
@@ -65,25 +43,32 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: widgetOptions.elementAt(_selectedIndex), // Render sesuai tab
+      body: bodies[controller.selectedIndex], // Render sesuai tab
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '', // Tanpa label
+            activeIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(Icons.bookmark),
             icon: Icon(Icons.bookmark_outline),
-            label: '', // Tanpa label
+            label: 'Bookmark',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: '', // Tanpa label
+            label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: controller.selectedIndex,
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.black,
-        onTap: onItemTapped, // Pindah tab
+        onTap: (index) {
+          controller.changeIndex(index);
+        },
       ),
     );
   }

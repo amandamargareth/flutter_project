@@ -1,5 +1,6 @@
-                                                                                             import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sesi4/controller/feed_controller.dart';
+import 'package:flutter_sesi4/controller/home_controller.dart';
 import 'package:flutter_sesi4/controller/photo_controller.dart';
 import 'package:flutter_sesi4/view/home_page.dart';
 import 'package:provider/provider.dart';
@@ -15,16 +16,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers : [
-        ChangeNotifierProvider(create: (context) => FeedController(),
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FeedController(),
         ),
-        ChangeNotifierProvider(create: (context) => PhotoController(),
+        ChangeNotifierProvider(
+          create: (context) => HomeController(),
         ),
-      ], 
+        ChangeNotifierProvider(
+          create: (context) => PhotoController(),
+        ),
+      ],
       child: MaterialApp(
         title: 'My App',
         theme: ThemeData(
-      
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
@@ -34,4 +39,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
