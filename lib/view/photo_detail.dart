@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sesi4/model/photo.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_sesi4/controller/home_controller.dart';
+
 
 class DetailPhotoPage extends StatelessWidget {
   final Photos photo;
@@ -12,36 +11,39 @@ class DetailPhotoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Photo Detail'),
+        title: const Text('Detail Photo'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Hero animation for the photo
-            Hero(
-              tag: photo.id ?? '',
-              child: Image.network(
-                photo.urls?.regular ?? '',
-                fit: BoxFit.cover,
-                height: 300,
-                width: double.infinity,
-              ),
-            ),
+            
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Photo description
-                  Text(
-                    photo.altDescription ?? 'No description available',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  ListTile(
+              leading: CircleAvatar(
+                backgroundImage:
+                    NetworkImage(photo.user?.profileImage?.small ?? ''),
+              ),
+              title: Text(photo.user?.userName ?? ''),
+              subtitle: Text(photo.user?.firstName ?? ''),
+              trailing:  Icon(Icons.more_vert_rounded),
+            ),
+            Hero(
+              tag: photo.id ?? '',
+              child: Image.network(
+                photo.urls?.regular ?? '',
+                fit: BoxFit.cover,
+                height: 500,
+                width: double.infinity,
+              ),
+            ),
+          
                   const SizedBox(height: 8),
                   // Photo likes
                   Row(
@@ -52,20 +54,12 @@ class DetailPhotoPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  // // Like/Unlike button
-                  // ElevatedButton.icon(
-                  //   onPressed: () {
-                  //     context.read<HomeController>().like(photo);
-                  //   },
-                  //   icon: Icon(
-                  //     photo.likedByUser ?? false
-                  //         ? Icons.favorite
-                  //         : Icons.favorite_border,
-                  //   ),
-                  //   label: Text(
-                  //     photo.likedByUser ?? false ? 'Unlike' : 'Like',
-                  //   ),
-                  // ),
+                  Text(photo.altDescription ?? '',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
