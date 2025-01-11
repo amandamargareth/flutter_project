@@ -35,7 +35,7 @@ class DetailPhotoPage extends StatelessWidget {
                           NetworkImage(photo.user?.profileImage?.small ?? ''),
                     ),
                     title: Text(photo.user?.userName ?? ''),
-                    subtitle: Text(photo.user?.location ?? ''),
+                    subtitle: Text(photo.user?.firstName ?? ''),
                     trailing: const Icon(Icons.more_vert_rounded),
                   ),
                   Hero(

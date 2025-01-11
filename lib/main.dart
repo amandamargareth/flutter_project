@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sesi4/controller/auth_controller.dart';
 import 'package:flutter_sesi4/controller/feed_controller.dart';
 import 'package:flutter_sesi4/controller/home_controller.dart';
 import 'package:flutter_sesi4/controller/photo_controller.dart';
+import 'package:flutter_sesi4/core/hive_storage.dart';
 import 'package:flutter_sesi4/view/home_page.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +11,22 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+  @override
+  void initState() {
+   HiveStorage.instance.initBox();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -25,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PhotoController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthController(),
         ),
       ],
       child: MaterialApp(
